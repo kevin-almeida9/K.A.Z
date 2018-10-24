@@ -1,0 +1,335 @@
+from constantes import *
+import pygame
+import fases
+import inimigos
+
+class Player(pygame.sprite.Sprite):
+    """ This class represents the bar at the bottom that the player
+        controls. """
+ 
+    # -- Methods
+    def __init__(self):
+        """ Constructor function """
+        self.levelShift = 0
+        self.vel = 5
+        self.animCount = 0
+        self.animStart = 0
+        self.direcao = False
+        self.atacando = False
+        self.invulneravel = 0
+        
+        self.vida = 3
+        # Call the parent's constructor
+        super().__init__()
+ 
+        # Create an image of the block, and fill it with a color.
+        # This could also be an image loaded from the disk.
+        self.width = 56
+        self.height = 98
+        self.image = pygame.Surface([self.width, self.height], pygame.SRCALPHA)
+        self.image.blit(KAZIdleAnim,(0,0))
+ 
+        # Set a referance to the image rect.
+        self.rect = self.image.get_rect()
+        
+        # Set speed vector of player
+        self.change_x = 0
+        self.change_y = 0
+ 
+        # List of sprites we can bump against
+        self.level = None
+
+    def calc_grav(self):
+        """ Calculate effect of gravity. """
+        if self.change_y == 0:
+            self.change_y = 1
+        else:
+            if self.change_y < 10:
+                self.change_y += .35
+ 
+        # See if we are on the ground.
+        if self.rect.y >= ScreenHeight - self.rect.height and self.change_y >= 0:
+            self.change_y = 0
+            self.vida = 0
+            
+    def update(self):
+        """ Move the player. """
+        # Gravity
+        self.calc_grav()
+ 
+        # Move left/right
+        self.rect.x += self.change_x
+ 
+        # See if we hit anything
+        block_hit_list = pygame.sprite.spritecollide(self, self.level.enemy_list, False)
+        for block in block_hit_list:
+            '''if(type(block) != type(fases.Platform(0,0,pygame.Surface([0,0])))):
+                # If we are moving right,
+                # set our right side to the left side of the item we hit
+                if self.change_x > 0:
+                    self.rect.right = block.rect.left
+                elif self.change_x < 0:
+                    # Otherwise if we are moving left, do the opposite.
+                    self.rect.left = block.rect.right'''
+            if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0))):
+                if(self.atacando):
+                    block.vida = False
+                    block.animStart = pygame.time.get_ticks()
+                elif(self.invulneravel == 0 and block.vida):
+                    self.vida-=1
+                    self.invulneravel = pygame.time.get_ticks()
+                        
+                
+                    
+ 
+        # Move up/down
+        self.rect.y += self.change_y
+ 
+        # Check and see if we hit anything
+        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        for block in block_hit_list:
+            # Reset our position based on the top/bottom of the object.
+            if(type(block) == type(fases.Platform(0,0,pygame.Surface([0,0])))):
+                if self.rect.bottom < block.rect.top+11:
+                    self.rect.bottom = block.rect.top
+                    if self.change_y > 0:
+                        self.change_y = 0
+ 
+            # Stop our vertical movement
+    def jump(self):
+        """ Called when user hits 'jump' button. """
+ 
+        # move down a bit and see if there is a platform below us.
+        # Move down 2 pixels because it doesn't work well if we only move down
+        # 1 when working with a platform moving down.
+        self.rect.y += 2
+        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        self.rect.y -= 2
+ 
+        # If it is ok to jump, set our speed upwards
+        if len(platform_hit_list) > 0 or self.rect.bottom >= ScreenHeight:
+            if(self.rect.bottom >= ScreenHeight):
+                self.change_y = -10
+            if len(platform_hit_list) > 0:
+                for objeto in platform_hit_list:
+                    if type(objeto) == type(fases.Platform(0,0,pygame.Surface([0,0]))):
+                        if(self.rect.bottom < objeto.rect.top+10):
+                            self.change_y = -10
+ 
+    # Player-controlled movement:
+    def go_left(self):
+        """ Called when the user hits the left arrow. """
+        self.direcao = True
+        if(self.animStart == 0):
+            self.animStart = pygame.time.get_ticks()
+
+        self.change_x = -self.vel
+        
+ 
+    def go_right(self):
+        """ Called when the user hits the right arrow. """
+        self.direcao = False
+        if(self.animStart == 0):
+            self.animStart = pygame.time.get_ticks()
+            
+        self.change_x = self.vel
+ 
+    def stop(self):
+        """ Called when the user lets off the keyboard. """
+        self.image.fill((255,255,255,0))
+        self.image.blit(KAZIdleAnim,(0,0))
+
+        if(self.direcao):
+            flipped = pygame.transform.flip(self.image,True,False)
+            self.image = flipped
+        self.animStart = 0
+        self.change_x = 0
+
+
+    def death(self, animPosition):
+        self.image.fill((255,255,255,0))
+        self.image.blit(KAZDeath[animPosition],(0,0))
+        #INVERTE CASO DIREÇÃO SEJA TRUE
+        if(self.direcao):
+            flipped = pygame.transform.flip(self.image,True,False)
+            self.image = flipped
+        
+    def attack(self,animPosition):
+        self.image.fill((255,255,255,0))
+        self.image.blit(KAZAttack[animPosition],(0,0))
+        #INVERTE CASO DIREÇÃO SEJA TRUE
+        if(self.direcao):
+            flipped = pygame.transform.flip(self.image,True,False)
+            self.image = flipped
+
+                
+def update(spriteList):
+    spriteList.update()
+
+
+def main():
+    """ Main Program """
+    pygame.init()
+    
+    # Set the height and width of the screen
+    size = [ScreenWidth, ScreenHeight]
+    screen = pygame.display.set_mode(size)
+ 
+    pygame.display.set_caption("K.A.Z.")
+ 
+    # Create the player
+    player = Player()
+    
+    # Create all the levels
+    level_list = []
+    level_list.append(fases.LevelFinal(player))
+ 
+    # Set the current level
+    current_level_no = 0
+    current_level = level_list[current_level_no]
+    
+    active_sprite_list = pygame.sprite.Group()
+    player.level = current_level
+    
+    active_sprite_list.add(player)
+ 
+    # Loop until the user clicks the close button.
+    done = False
+ 
+    # Used to manage how fast the screen updates
+    clock = pygame.time.Clock()
+ 
+    # -------- Main Program Loop -----------
+    while not done:
+            
+            
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+ 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player.go_left()
+                if event.key == pygame.K_RIGHT:
+                    player.go_right()
+                if event.key == pygame.K_z or event.key == pygame.K_UP:
+                    player.jump()
+                if event.key == pygame.K_c:
+                    player.stop()
+                    player.atacando = True
+                    player.animStart = pygame.time.get_ticks()
+                    if(player.direcao):
+                        player.rect.x -= 44
+                    
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT and player.change_x < 0:
+                    player.stop()
+                if event.key == pygame.K_RIGHT and player.change_x > 0:
+                    player.stop()
+ 
+        # Update the player.
+        if(player.vida <= 0):
+            player.stop()
+            player.animStart = pygame.time.get_ticks()
+            player.image = pygame.Surface([96,96],pygame.SRCALPHA)
+            while True:
+                animPosition = (pygame.time.get_ticks()- player.animStart)//250
+                if(animPosition >= len(KAZDeath)):
+                    player.kill()
+                    break
+                player.death(animPosition)
+                current_level.draw(screen)
+                active_sprite_list.draw(screen)
+                active_sprite_list.update()
+                pygame.display.flip()
+
+        if(player.atacando):
+            player.image = pygame.Surface([96,96],pygame.SRCALPHA)
+            animPosition = (pygame.time.get_ticks()- player.animStart)//90
+            if(animPosition >= len(KAZAttack)):
+                player.image = pygame.Surface([player.width,player.height],pygame.SRCALPHA)
+                player.image.blit(KAZIdleAnim, (0,0))
+                player.atacando = False
+                player.animStart = 0
+                if(player.direcao):
+                    flipped = pygame.transform.flip(player.image,True,False)
+                    player.image = flipped
+                    player.rect.x+=44
+            else:
+                player.attack(animPosition)
+            
+        if(player.invulneravel > 0):
+            b = pygame.time.get_ticks() - player.invulneravel
+            if(b >= 2500):
+                player.invulneravel = 0
+
+        
+        
+        update(active_sprite_list)
+ 
+        # Update items in the level
+        update(current_level)
+
+        
+        # If the player gets near the right side, shift the world left (-x)
+        if player.rect.right > ScreenWidth-200:
+
+            if player.levelShift+ScreenWidth-player.vel <= player.level.max:
+                player.rect.right = ScreenWidth-200
+                player.levelShift+=player.vel
+                player.level.shift = -player.levelShift
+                player.level.enemyMove()
+                for platform in player.level.platform_list:
+                    platform.rect.x-=player.vel
+            elif player.rect.right >= ScreenWidth:
+                player.rect.right = ScreenWidth
+ 
+        # If the player gets near the left side, shift the world right (+x)
+        if player.rect.left < 200:
+            if player.levelShift-player.vel+200 >= 200:
+                player.rect.left = 200
+                player.levelShift-=player.vel
+                player.level.shift = -player.levelShift
+                player.level.enemyMove()
+                for platform in player.level.platform_list:
+                    platform.rect.x+=player.vel
+            elif player.rect.left <= 0:
+                player.rect.left = 0
+
+                
+ 
+        # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+
+        current_level.draw(screen)
+        active_sprite_list.draw(screen)
+        player.level.enemyMove()
+        for i in range(player.vida):
+            screen.blit(KAZLifeIcon,(i*35,0))
+        
+        # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+ 
+        # Limit to 60 frames per second
+        clock.tick(60)
+ 
+        # Go ahead and update the screen with what we've drawn.
+        pygame.display.flip()
+
+        #ANIMAÇÃO RUNNING
+        if(player.animStart > 0 and not player.atacando ):
+            player.image.fill((255,255,255,0))
+            if((pygame.time.get_ticks()- player.animStart)//150 >= len(KAZRunning)):
+                player.animStart = pygame.time.get_ticks()
+            player.image.blit(KAZRunning[(pygame.time.get_ticks()- player.animStart)//150],(0,0))
+            #INVERTE CASO DIREÇÃO SEJA TRUE
+            if(player.direcao):
+                flipped = pygame.transform.flip(player.image,True,False)
+                player.image = flipped
+        if(player.rect.x+player.levelShift >= player.level.max-100):
+            player.vida = 0
+    # Be IDLE friendly. If you forget this line, the program will 'hang'
+    # on exit.
+    pygame.quit()
+ 
+if __name__ == "__main__":
+    main()
