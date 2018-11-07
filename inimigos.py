@@ -39,10 +39,10 @@ class SlimeGeneral(pygame.sprite.Sprite):
             if self.direcao == 1:
                 flipped = pygame.transform.flip(self.image,True,False)
                 self.image = flipped
-            
-            self.__direcao(self.mMx[0]+self.levelShift,self.mMx[1]+self.levelShift)
+                
             self.posAtual[0] += (self.vel*self.direcao)
-            self.rect.x = self.posAtual[0]+self.levelShift
+        self.__direcao(self.mMx[0]+self.levelShift,self.mMx[1]+self.levelShift)    
+        self.rect.x = self.posAtual[0]+self.levelShift
 
     def morrer(self):
         posAnim = (pygame.time.get_ticks()-self.animStart)//150
