@@ -48,9 +48,10 @@ class Player(pygame.sprite.Sprite):
                 self.change_y += .35
  
         # See if we are on the ground.
-        if self.rect.y >= ScreenHeight - self.rect.height and self.change_y >= 0:
-            self.change_y = 0
+        if self.rect.y >= ScreenHeight - self.rect.height-10 and self.change_y >= 0:
             self.vida = 0
+            self.rect.bottom = ScreenHeight
+            self.change_y = 0
             
     def update(self):
         """ Move the player. """
@@ -72,7 +73,7 @@ class Player(pygame.sprite.Sprite):
                     # Otherwise if we are moving left, do the opposite.
                     self.rect.left = block.rect.right'''
             if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0))):
-                if(self.atacando):
+                if(self.atacando and block.vida == True):
                     block.vida = False
                     block.animStart = pygame.time.get_ticks()
                 elif(self.invulneravel == 0 and block.vida):
@@ -214,7 +215,7 @@ def main():
                     player.go_right()
                 if event.key == pygame.K_z or event.key == pygame.K_UP:
                     player.jump()
-                if event.key == pygame.K_c:
+                if event.key == pygame.K_c and player.atacando == False:
                     player.stop()
                     player.atacando = True
                     player.animStart = pygame.time.get_ticks()
@@ -244,6 +245,7 @@ def main():
                 active_sprite_list.update()
                 pygame.display.flip()
 
+        #Animação ataque
         if(player.atacando):
             player.image = pygame.Surface([96,96],pygame.SRCALPHA)
             animPosition = (pygame.time.get_ticks()- player.animStart)//90
@@ -258,10 +260,10 @@ def main():
                     player.rect.x+=44
             else:
                 player.attack(animPosition)
-            
+        #Tempo de invulnerabilidade    
         if(player.invulneravel > 0):
             b = pygame.time.get_ticks() - player.invulneravel
-            if(b >= 2500):
+            if(b >= 2500): #2500ms
                 player.invulneravel = 0
 
         

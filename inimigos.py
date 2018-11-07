@@ -28,6 +28,7 @@ class SlimeGeneral(pygame.sprite.Sprite):
 
     def movimento(self):
         if self.vida == True:
+            print("A")
             if(self.animStart == 0):
                 self.animStart = pygame.time.get_ticks()
             self.__direcao(self.mMx[0]+self.levelShift,self.mMx[1]+self.levelShift)

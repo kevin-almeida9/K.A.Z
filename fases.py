@@ -43,6 +43,7 @@ class Level(object):
         self.enemy_list.update()
         for enemy in self.enemy_list:
             if not enemy.vida:
+                enemy.levelShift = 0
                 enemy.morrer()
  
     def draw(self, screen):
