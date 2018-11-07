@@ -14,7 +14,7 @@ class SlimeGeneral(pygame.sprite.Sprite):
         self.animStart = 0
         self.vida = True
         self.vel = 1.2
-        self.direcao = True
+        self.direcao = 1
         self.posIni = [x,y]
         self.posAtual = [x,y]
         self.mMx = [xmin,xmax]
@@ -25,12 +25,21 @@ class SlimeGeneral(pygame.sprite.Sprite):
             self.direcao = 1
         elif self.rect.right >= lim_max:
             self.direcao = -1
-
+            
     def movimento(self):
-        if self.vida == True:
-            print("A")
-            if(self.animStart == 0):
+        if self.vida:
+            animPos = ((pygame.time.get_ticks()-self.animStart)//150)
+            if(self.animStart == 0  or animPos >= len(SlimeGeneralWalk)):
                 self.animStart = pygame.time.get_ticks()
+                animPos = ((pygame.time.get_ticks()-self.animStart)//150)
+
+            
+            self.image.fill((255,255,255,0))
+            self.image.blit(SlimeGeneralWalk[animPos],(0,0))
+            if self.direcao == 1:
+                flipped = pygame.transform.flip(self.image,True,False)
+                self.image = flipped
+            
             self.__direcao(self.mMx[0]+self.levelShift,self.mMx[1]+self.levelShift)
             self.posAtual[0] += (self.vel*self.direcao)
             self.rect.x = self.posAtual[0]+self.levelShift
