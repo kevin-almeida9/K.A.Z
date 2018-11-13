@@ -12,8 +12,13 @@ class Player(pygame.sprite.Sprite):
         """ Constructor function """
         self.levelShift = 0
         self.vel = 5
-        self.animCount = 0
+
+        self.animDelay = 1
+        self.animAnt = 0
         self.animStart = 0
+        self.animCount = 0
+        self.anim = [KAZIdleAnim]
+
         self.direcao = False
         self.atacando = False
         self.invulneravel = 0
@@ -120,30 +125,20 @@ class Player(pygame.sprite.Sprite):
     # Player-controlled movement:
     def go_left(self):
         """ Called when the user hits the left arrow. """
+        self.animator(2)
         self.direcao = True
-        if(self.animStart == 0):
-            self.animStart = pygame.time.get_ticks()
-
         self.change_x = -self.vel
         
  
     def go_right(self):
         """ Called when the user hits the right arrow. """
+        self.animator(2)
         self.direcao = False
-        if(self.animStart == 0):
-            self.animStart = pygame.time.get_ticks()
-            
         self.change_x = self.vel
  
     def stop(self):
         """ Called when the user lets off the keyboard. """
-        self.image.fill((255,255,255,0))
-        self.image.blit(KAZIdleAnim,(0,0))
-
-        if(self.direcao):
-            flipped = pygame.transform.flip(self.image,True,False)
-            self.image = flipped
-        self.animStart = 0
+        self.animator(3)
         self.change_x = 0
 
 
@@ -162,6 +157,61 @@ class Player(pygame.sprite.Sprite):
         if(self.direcao):
             flipped = pygame.transform.flip(self.image,True,False)
             self.image = flipped
+
+    def animator(self, atual = None):
+        '''
+        0 - Ataque
+        1 - Pulo
+        2 - Andando
+        3 - Idle
+        '''
+        
+        if atual != self.animAnt and atual != None:
+            self.animStart = pygame.time.get_ticks()
+            self.animAnt = atual
+
+            if atual == 0:
+                self.image = pygame.Surface([96, 96], pygame.SRCALPHA)
+                self.anim = KAZAttack
+                self.animDelay = 80
+            #elif atual == 1:
+                #anim = KAZJump
+            elif atual == 2:
+                self.image = pygame.Surface([self.width, self.height], pygame.SRCALPHA)
+                self.anim = KAZRunning
+                self.animDelay = 150
+            elif atual == 3:
+                self.image = pygame.Surface([self.width, self.height], pygame.SRCALPHA)
+                self.animDelay = 1
+                self.anim = [KAZIdleAnim]
+                self.image = pygame.Surface([self.width, self.height], pygame.SRCALPHA)
+                self.image.blit(KAZIdleAnim,(0,0))
+
+        else:
+            self.image.fill((255,255,255,0))
+            self.animCount = (pygame.time.get_ticks()-self.animStart)//self.animDelay
+            
+            if(self.animAnt == 3):
+                self.image.blit(KAZIdleAnim,(0,0))
+            elif(self.animCount >= len(self.anim)):
+                if(self.animAnt == 0):
+                    self.image = pygame.Surface([self.width, self.height], pygame.SRCALPHA)
+                    self.atacando = False
+                    self.animStart = 0
+                    self.animator(3)
+                    if(self.direcao):
+                        self.rect.x += 44
+                else:
+                    self.animStart = pygame.time.get_ticks()
+                    self.animCount = (pygame.time.get_ticks()-self.animStart)//self.animDelay
+            else:
+                self.image.blit(self.anim[self.animCount],(0,0))
+            
+            if(self.direcao):
+                flipped = pygame.transform.flip(self.image,True,False)
+                self.image = flipped
+        
+            
 
                 
 def update(spriteList):
@@ -199,28 +249,27 @@ def main():
  
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
- 
     # -------- Main Program Loop -----------
     while not done:
-            
-            
+        player.animator()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
  
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    player.go_left()
-                if event.key == pygame.K_RIGHT:
-                    player.go_right()
-                if event.key == pygame.K_z or event.key == pygame.K_UP:
-                    player.jump()
-                if event.key == pygame.K_c and player.atacando == False:
-                    player.stop()
-                    player.atacando = True
-                    player.animStart = pygame.time.get_ticks()
-                    if(player.direcao):
-                        player.rect.x -= 44
+                if(player.atacando == False):
+                    if event.key == pygame.K_LEFT:
+                        player.go_left()
+                    if event.key == pygame.K_RIGHT:
+                        player.go_right()
+                    if event.key == pygame.K_z or event.key == pygame.K_UP:
+                        player.jump()
+                    if event.key == pygame.K_c:
+                        player.stop()
+                        player.atacando = True
+                        player.animator(0)
+                        if(player.direcao):
+                            player.rect.x -= 44
                     
 
             if event.type == pygame.KEYUP:
@@ -244,22 +293,7 @@ def main():
                 active_sprite_list.draw(screen)
                 active_sprite_list.update()
                 pygame.display.flip()
-
-        #Animação ataque
-        if(player.atacando):
-            player.image = pygame.Surface([96,96],pygame.SRCALPHA)
-            animPosition = (pygame.time.get_ticks()- player.animStart)//90
-            if(animPosition >= len(KAZAttack)):
-                player.image = pygame.Surface([player.width,player.height],pygame.SRCALPHA)
-                player.image.blit(KAZIdleAnim, (0,0))
-                player.atacando = False
-                player.animStart = 0
-                if(player.direcao):
-                    flipped = pygame.transform.flip(player.image,True,False)
-                    player.image = flipped
-                    player.rect.x+=44
-            else:
-                player.attack(animPosition)
+                
         #Tempo de invulnerabilidade    
         if(player.invulneravel > 0):
             b = pygame.time.get_ticks() - player.invulneravel
@@ -317,16 +351,6 @@ def main():
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
 
-        #ANIMAÇÃO RUNNING
-        if(player.animStart > 0 and not player.atacando ):
-            player.image.fill((255,255,255,0))
-            if((pygame.time.get_ticks()- player.animStart)//150 >= len(KAZRunning)):
-                player.animStart = pygame.time.get_ticks()
-            player.image.blit(KAZRunning[(pygame.time.get_ticks()- player.animStart)//150],(0,0))
-            #INVERTE CASO DIREÇÃO SEJA TRUE
-            if(player.direcao):
-                flipped = pygame.transform.flip(player.image,True,False)
-                player.image = flipped
         if(player.rect.x+player.levelShift >= player.level.max-100):
             player.vida = 0
     # Be IDLE friendly. If you forget this line, the program will 'hang'
