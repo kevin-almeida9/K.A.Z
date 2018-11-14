@@ -2,6 +2,65 @@ import pygame
 from constantes import *
 
 
+#-------------------------------------------------------------------Spitter--------------------------------------------------------     
+class Tiro(pygame.sprite.Sprite):
+    def __init__(self,posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('Slimes/Spitter/SpitterShoot.png')
+        self.rect = self.image.get_rect()
+        
+        self.velocidade = 5 #aumentando a variavel de velocidade modificamos a frequencia de balas
+        self.rect.top = posy
+        self.rect.left = posx
+        self.direcao = -1
+
+    def movimento(self):
+        self.rect.left += self.velocidade*self.direcao
+
+    def direcao(self,pos_player, pos_mob):
+        if pos_player <= pos_mob:
+            direcao = -1
+        elif pos_player >= pos_mob:
+            direcao = 1
+
+        
+class SlimeSpitter (pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.posAnim = 0
+        self.image = SlimeSpritterWalk[self.posAnim]
+        self.rect = self.image.get_rect()
+
+        self.levelShift = 0
+        self.vida = True
+        self.animStart = 0
+        self.xIni = x
+        self.yIni = y
+        self.rect.x = x
+        self.rect.y = y
+        self.listDisparo = pygame.sprite.Group()
+
+    def morrer():
+        self.kill
+        
+    def colocar(self, superficie):
+        superficie.blit(self.image, self.rect)
+
+    def disparar(self):
+        minhabala = Tiro(self.rect.left-10,self.rect.centery)
+        self.listDisparo.add(minhabala)
+
+    def morrer(self):
+        self.vida = False
+        self.animStart = pygame.time.get_ticks()
+
+    def movimento(self):
+        self.rect.x = self.xIni+self.levelShift
+        return
+
+
+        
+#--------------------------------------------------------------------------GENERAL---------------------------------------------------------------------
 class SlimeGeneral(pygame.sprite.Sprite):
     def __init__(self, x, y, xmin, xmax):
         super().__init__()

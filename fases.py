@@ -54,6 +54,7 @@ class Level(object):
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
         self.enemy_list.draw(screen)
+        
 
     def enemyMove(self):
          for s in self.enemy_list:
@@ -91,9 +92,11 @@ class LevelFinal(Level):
                             [3020,367,2957,3090],
                             [3098,303,3098,3906],
                             [3906,303,3098,3906],
-                            [4145,371,3740,4359],
+                            [4145,371,3924,4359],
                             [4585,371,4366,4759]
                             ]
+
+        slimeSpitterList = [[564,371]]
         
         # Inicia Variaveis
         self.spawnPointx = 150
@@ -115,6 +118,10 @@ class LevelFinal(Level):
             enemy = inimigos.SlimeGeneral(sg[0],sg[1],sg[2],sg[3])
             enemy.rect.x = sg[0]
             enemy.rect.y = sg[1]-22
+            self.enemy_list.add(enemy)
+
+        for sp in slimeSpitterList:
+            enemy = inimigos.SlimeSpitter(sp[0],sp[1])
             self.enemy_list.add(enemy)
 
     

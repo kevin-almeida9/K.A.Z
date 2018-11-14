@@ -77,7 +77,7 @@ class Player(pygame.sprite.Sprite):
                 elif self.change_x < 0:
                     # Otherwise if we are moving left, do the opposite.
                     self.rect.left = block.rect.right'''
-            if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0))):
+            if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0)) or type(block) == type(inimigos.SlimeSpitter(0,0))):
                 if(self.atacando and block.vida == True):
                     block.vida = False
                     block.animStart = pygame.time.get_ticks()
@@ -189,7 +189,7 @@ class Player(pygame.sprite.Sprite):
 
         else:
             self.image.fill((255,255,255,0))
-            self.animCount = (pygame.time.get_ticks()-self.animStart)//self.animDelay
+            self.animCount = (pygame.time.get_ticks()-self.animStart)//self.animDelay 
             
             if(self.animAnt == 3):
                 self.image.blit(KAZIdleAnim,(0,0))
@@ -280,19 +280,22 @@ def main():
  
         # Update the player.
         if(player.vida <= 0):
+            a = True
             player.stop()
             player.animStart = pygame.time.get_ticks()
             player.image = pygame.Surface([96,96],pygame.SRCALPHA)
-            while True:
+            while a:
                 animPosition = (pygame.time.get_ticks()- player.animStart)//250
                 if(animPosition >= len(KAZDeath)):
                     player.kill()
-                    break
-                player.death(animPosition)
-                current_level.draw(screen)
-                active_sprite_list.draw(screen)
-                active_sprite_list.update()
-                pygame.display.flip()
+                    a = False
+                else:
+                    player.death(animPosition)
+                    current_level.draw(screen)
+                    active_sprite_list.draw(screen)
+                    active_sprite_list.update()
+                    pygame.display.flip()
+            main()
                 
         #Tempo de invulnerabilidade    
         if(player.invulneravel > 0):
