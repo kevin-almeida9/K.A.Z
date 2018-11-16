@@ -50,14 +50,14 @@ KAZAttack = [pygame.image.load('KAZ\AttackAnimation\KAZRightAttack0.png'),
              pygame.image.load('KAZ\AttackAnimation\KAZRightAttack7.png')]
 
 #DEATH
-KAZDeath = [pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation0.png'),
-            pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation1.png'),
-            pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation2.png'),
-            pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation3.png'),
-            pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation4.png'),
-            pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation5.png'),
-            pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation6.png'),
-            pygame.image.load('KAZ\KAZDeathAnimation\KAZDeathAnimation7.png'),]
+KAZDeath = [pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation0.png'),
+            pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation1.png'),
+            pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation2.png'),
+            pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation3.png'),
+            pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation4.png'),
+            pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation5.png'),
+            pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation6.png'),
+            pygame.image.load('KAZ\DeathAnimation\KAZDeathAnimation7.png'),]
 
 
 #SLIME GENERAL
