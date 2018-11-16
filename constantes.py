@@ -1,8 +1,5 @@
 import pygame
 
-
-
-
 ScreenWidth = 800
 ScreenHeight = 600
 
@@ -81,19 +78,19 @@ SlimeGeneralDeath = [pygame.image.load('Slimes\SlimeGeneral\SlimeGeneralDeath0.p
                     pygame.image.load('Slimes\SlimeGeneral\SlimeGeneralDeath6.png'),
                     pygame.image.load('Slimes\SlimeGeneral\SlimeGeneralDeath7.png')]
 
-#SLIME SPRITTER
+#SLIME Spitter
 #ANDANDO
-SlimeSpritterWalk = [pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation0.png'),
-                     pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation1.png'),
-                     pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation2.png'),
-                     pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation3.png'),
-                     pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation4.png'),
-                     pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation5.png'),
-                     pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation6.png'),
-                     pygame.image.load('Slimes/Spitter/SpitterSlimeLeft/SpitterWalkLAnimation7.png')]
+SlimeSpitterWalk = [pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation0.png'),
+                     pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation1.png'),
+                     pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation2.png'),
+                     pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation3.png'),
+                     pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation4.png'),
+                     pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation5.png'),
+                     pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation6.png'),
+                     pygame.image.load('Slimes/Spitter/SpitterSlime/SpitterWalkLAnimation7.png')]
 
 #MORRENDO
-SlimeSpritterDead = [pygame.image.load('Slimes/Spitter/SpitterSlimeDeath/SpitterDeathAnimation0.png'),
+SlimeSpitterDead = [pygame.image.load('Slimes/Spitter/SpitterSlimeDeath/SpitterDeathAnimation0.png'),
                      pygame.image.load('Slimes/Spitter/SpitterSlimeDeath/SpitterDeathAnimation1.png'),
                      pygame.image.load('Slimes/Spitter/SpitterSlimeDeath/SpitterDeathAnimation2.png'),
                      pygame.image.load('Slimes/Spitter/SpitterSlimeDeath/SpitterDeathAnimation3.png'),
@@ -103,7 +100,7 @@ SlimeSpritterDead = [pygame.image.load('Slimes/Spitter/SpitterSlimeDeath/Spitter
                      pygame.image.load('Slimes/Spitter/SpitterSlimeDeath/SpitterDeathAnimation7.png')]
 
 #ATIRANDO
-SlimeSpritterShoot = [pygame.image.load('Slimes/Spitter/SpitterSlimeAttackAnimation/SpitterAttackAnimation0.png'),
+SlimeSpitterShoot = [pygame.image.load('Slimes/Spitter/SpitterSlimeAttackAnimation/SpitterAttackAnimation0.png'),
                       pygame.image.load('Slimes/Spitter/SpitterSlimeAttackAnimation/SpitterAttackAnimation1.png'),
                       pygame.image.load('Slimes/Spitter/SpitterSlimeAttackAnimation/SpitterAttackAnimation2.png'),
                       pygame.image.load('Slimes/Spitter/SpitterSlimeAttackAnimation/SpitterAttackAnimation3.png'),
