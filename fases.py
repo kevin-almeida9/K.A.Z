@@ -95,6 +95,8 @@ class LevelFinal(Level):
                             [4585,371,4366,4759]
                             ]
         
+        HeliSlimeList = [[564,371,337,769]]
+        
         # Inicia Variaveis
         self.spawnPointx = 150
         self.spawnPointy = 412
