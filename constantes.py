@@ -115,6 +115,16 @@ SlimeSpitterShoot = [pygame.image.load('Slimes/SpitterSlime/SpitterSlimeAttackAn
                       pygame.image.load('Slimes/SpitterSlime/SpitterSlimeAttackAnimation/SpitterAttackAnimation5.png'),
                       pygame.image.load('Slimes/SpitterSlime/SpitterSlimeAttackAnimation/SpitterAttackAnimation6.png'),
                       pygame.image.load('Slimes/SpitterSlime/SpitterSlimeAttackAnimation/SpitterAttackAnimation7.png')]
+
+#Heli Slime
+#VOANDO
+HeliSlime = [pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation0.png'),
+             pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation1.png'),
+             pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation2.png'),
+             pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation3.png'),
+             pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation4.png'),
+             pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation5.png')]
+             
 #-----------------------------------------------------------------------ICONES-------------------------------------------------------------------------
 KAZLifeIcon = pygame.image.load('KAZ\Life\LifeIconIcon.png')
 SpitterShoot = pygame.image.load('Slimes\SpitterSlime\SpitterShoot.png')
