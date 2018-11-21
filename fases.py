@@ -42,7 +42,11 @@ class Level(object):
         self.platform_list.update()
         self.enemy_list.update()
         for enemy in self.enemy_list:
-            if not enemy.vida:
+            if enemy.invulneravel > 0:
+                b = pygame.time.get_ticks() - enemy.invulneravel
+                if(b>1000):  
+                    enemy.invulneravel = 0
+            if not enemy.vivo:
                 enemy.levelShift = self.shift
                 enemy.morrer()
  
@@ -121,7 +125,7 @@ class LevelFinal(Level):
             self.enemy_list.add(enemy)
 
         for sp in slimeSpitterList:
-            enemy = inimigos.SlimeSpitter(sp[0],sp[1])
+            enemy = inimigos.SlimeSpitter(sp[0],sp[1]-22)
             self.enemy_list.add(enemy)
 
     

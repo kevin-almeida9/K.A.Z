@@ -10,12 +10,12 @@ class Tiro(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
         self.velocidade = 5 #aumentando a variavel de velocidade modificamos a frequencia de balas
-        self.rect.top = posy
-        self.rect.left = posx
+        self.rect.y = posy
+        self.rect.x = posx
         self.direcao = -1
 
     def movimento(self):
-        self.rect.left += self.velocidade*self.direcao
+        self.rect.x += self.velocidade*self.direcao
 
     def direcao(self,pos_player, pos_mob):
         if pos_player <= pos_mob:
@@ -27,13 +27,14 @@ class Tiro(pygame.sprite.Sprite):
 class SlimeSpitter (pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.posAnim = 0
-        self.image = SlimeSpritterWalk[self.posAnim]
         self.rect = self.image.get_rect()
 
         self.levelShift = 0
-        self.vida = True
+        self.invulneravel = 0
+        self.vida = 1
+        self.vivo = True
         self.animStart = 0
+        self.atirou = False
         self.xIni = x
         self.yIni = y
         self.rect.x = x
@@ -47,8 +48,16 @@ class SlimeSpitter (pygame.sprite.Sprite):
         superficie.blit(self.image, self.rect)
 
     def disparar(self):
-        minhabala = Tiro(self.rect.left-10,self.rect.centery)
-        self.listDisparo.add(minhabala)
+        animPos = (pygame.time.get_ticks() - self.animStart)//150
+        if(animPos >= len(SlimeSpitterShoot))
+            self.atirou = False
+            self.animStart = pygame.time.get_ticks()
+            animPos = (pygame.time.get_ticks() - self.animStart)//150
+        if(animPos == 5)
+            minhabala = Tiro(self.rect.left-10,self.rect.centery)
+            self.listDisparo.add(minhabala)
+
+        
 
     def morrer(self):
         self.vida = False
@@ -71,7 +80,9 @@ class SlimeGeneral(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.animStart = 0
-        self.vida = True
+        self.invulneravel = 0
+        self.vida = 1
+        self.vivo = True
         self.vel = 1.2
         self.direcao = 1
         self.posIni = [x,y]

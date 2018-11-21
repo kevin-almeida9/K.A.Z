@@ -77,10 +77,13 @@ class Player(pygame.sprite.Sprite):
                 elif self.change_x < 0:
                     # Otherwise if we are moving left, do the opposite.
                     self.rect.left = block.rect.right'''
-            if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0)) or type(block) == type(inimigos.SlimeSpitter(0,0))):
-                if(self.atacando and block.vida == True):
-                    block.vida = False
-                    block.animStart = pygame.time.get_ticks()
+            if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0)) or type(block) == type(inimigos.SlimeSpitter(0,0)) or type(block) == type(inimigos.Tiro(0,0))):
+                if(self.atacando and block.vivo == True and block.invulneravel == 0):
+                    block.vida -= 1
+                    block.invulneravel = pygame.time.get_ticks()
+                    if(block.vida <= 0):
+                        block.vivo = False
+                        block.animStart = pygame.time.get_ticks()
                 elif(self.invulneravel == 0 and block.vida):
                     self.vida-=1
                     self.invulneravel = pygame.time.get_ticks()
