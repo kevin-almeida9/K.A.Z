@@ -27,6 +27,8 @@ class Tiro(pygame.sprite.Sprite):
 class SlimeSpitter (pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
+        
+        self.image = pygame.Surface([64,64], pygame.SRCALPHA)
         self.rect = self.image.get_rect()
 
         self.levelShift = 0
@@ -49,11 +51,11 @@ class SlimeSpitter (pygame.sprite.Sprite):
 
     def disparar(self):
         animPos = (pygame.time.get_ticks() - self.animStart)//150
-        if(animPos >= len(SlimeSpitterShoot))
+        if(animPos >= len(SlimeSpitterShoot)):
             self.atirou = False
             self.animStart = pygame.time.get_ticks()
             animPos = (pygame.time.get_ticks() - self.animStart)//150
-        if(animPos == 5)
+        if(animPos == 5):
             minhabala = Tiro(self.rect.left-10,self.rect.centery)
             self.listDisparo.add(minhabala)
 
