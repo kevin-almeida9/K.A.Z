@@ -20,18 +20,14 @@ def button(msg, x, y, width, height, btn_color, text_color, onImage):
         screen.blit(onImage, (x-45 ,y-4 ))
     
 def main():
-
-    
     pygame.font.init()
     
-
     ScreenImage = pygame.Surface(screenSize, pygame.SRCALPHA)
 
     fontPadrao = pygame.font.get_default_font()
     fontSize = 200
     
     fontTeste = pygame.font.SysFont(fontPadrao, fontSize)
-    
     
     menu = True
     
@@ -42,6 +38,8 @@ def main():
                 quit()
             if event.type== pygame.MOUSEBUTTONDOWN:
                 mousePos = pygame.mouse.get_pos()
+                if (ScreenWidth-btnRectSize[0])/2<mousePos[0]<(ScreenWidth-btnRectSize[0])/2+btnRectSize[0] and (ScreenHeight/4)+1*30<mousePos[1]<(ScreenHeight/4)+1*30+btnRectSize[1]:
+                    Teste.main()
                 print('-------')
                 print(((ScreenWidth-btnRectSize[0])/2), mousePos[0], (ScreenWidth+btnRectSize[0])/2 )
                 print((ScreenHeight/4)+1*30, mousePos[1], (ScreenHeight/4)+1*30+btnRectSize[1])
@@ -49,34 +47,15 @@ def main():
         Text = fontTeste.render('K.A.Z.', 1, DarkGreen)
         screen.blit(MenuBG,(0,0))
         screen.blit(Text, ((ScreenWidth/2)-fontSize, 30))
-
-                
-        #btnText = btnFont.render('Jogar', 1, White)
-        #pygame.draw.rect(screen, DarkGreen, ((ScreenWidth/2-90), (ScreenHeight/4)+1*30, 180, 45))
-        #screen.blit(btnText, ((ScreenWidth/2)-btnSize, (ScreenHeight/4)+1*30+8))
-        
-        #btnText = btnFont.render('Opções', 1, White)
-        #pygame.draw.rect(screen, DarkGreen, ((ScreenWidth/2-90), (ScreenHeight/4)+3*30, 180, 45))
-        #screen.blit(btnText, ((ScreenWidth/2)-btnSize, (ScreenHeight/4)+3*30+8))
-
-        #btnText = btnFont.render('Sair', 1, White)
-        #pygame.draw.rect(screen, DarkGreen, ((ScreenWidth/2-90), (ScreenHeight/4)+5*30, 180, 45))
-        #screen.blit(btnText, ((ScreenWidth/2)-btnSize, (ScreenHeight/4)+5*30+8))
-
         
 #<g: GERANDO OS BOTÕES>------------------------------------------
-        #i = 1
-
+        
         button("Jogar", (ScreenWidth-btnRectSize[0])/2, (ScreenHeight/4)+1*30, btnRectSize[0], btnRectSize[1], DarkGreen, White, selectedOption)
         button("Opçoes", (ScreenWidth-btnRectSize[0])/2, (ScreenHeight/4)+3*30, btnRectSize[0], btnRectSize[1], DarkGreen, White, selectedOption)
         button("Sair", (ScreenWidth-btnRectSize[0])/2, (ScreenHeight/4)+5*30, btnRectSize[0], btnRectSize[1], DarkGreen, White, selectedOption)
-        #while i <= 5:
-         #   button(i)
-          #  i+=2
-#-------------------------------------------------------------</g>
-            
+
+#-------------------------------------------------------------</g
         
-            
         pygame.display.update()
         clock.tick(15)
 
