@@ -77,13 +77,10 @@ class Player(pygame.sprite.Sprite):
                 elif self.change_x < 0:
                     # Otherwise if we are moving left, do the opposite.
                     self.rect.left = block.rect.right'''
-            if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0)) or type(block) == type(inimigos.SlimeSpitter(0,0)) or type(block) == type(inimigos.Tiro(0,0))):
-                if(self.atacando and block.vivo == True and block.invulneravel == 0):
-                    block.vida -= 1
-                    block.invulneravel = pygame.time.get_ticks()
-                    if(block.vida <= 0):
-                        block.vivo = False
-                        block.animStart = pygame.time.get_ticks()
+            if(type(block) == type(inimigos.SlimeGeneral(0,0,0,0))):
+                if(self.atacando and block.vida == True):
+                    block.vida = False
+                    block.animStart = pygame.time.get_ticks()
                 elif(self.invulneravel == 0 and block.vida):
                     self.vida-=1
                     self.invulneravel = pygame.time.get_ticks()
@@ -192,7 +189,7 @@ class Player(pygame.sprite.Sprite):
 
         else:
             self.image.fill((255,255,255,0))
-            self.animCount = (pygame.time.get_ticks()-self.animStart)//self.animDelay 
+            self.animCount = (pygame.time.get_ticks()-self.animStart)//self.animDelay
             
             if(self.animAnt == 3):
                 self.image.blit(KAZIdleAnim,(0,0))
@@ -283,21 +280,20 @@ def main():
  
         # Update the player.
         if(player.vida <= 0):
-            a = True
             player.stop()
             player.animStart = pygame.time.get_ticks()
             player.image = pygame.Surface([96,96],pygame.SRCALPHA)
-            while a:
+            while True:
                 animPosition = (pygame.time.get_ticks()- player.animStart)//250
                 if(animPosition >= len(KAZDeath)):
                     player.kill()
-                    a = False
-                else:
-                    player.death(animPosition)
-                    current_level.draw(screen)
-                    active_sprite_list.draw(screen)
-                    active_sprite_list.update()
-                    pygame.display.flip()
+                    break
+                player.death(animPosition)
+                current_level.draw(screen)
+                active_sprite_list.draw(screen)
+                active_sprite_list.update()
+                pygame.display.flip()
+            pygame.time.delay(500)
             main()
                 
         #Tempo de invulnerabilidade    
