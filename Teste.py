@@ -293,6 +293,8 @@ def main():
                 active_sprite_list.draw(screen)
                 active_sprite_list.update()
                 pygame.display.flip()
+            pygame.time.delay(500)
+            main()
                 
         #Tempo de invulnerabilidade    
         if(player.invulneravel > 0):
