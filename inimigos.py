@@ -2,6 +2,76 @@ import pygame
 from constantes import *
 
 
+#-------------------------------------------------------------------Spitter--------------------------------------------------------     
+class Tiro(pygame.sprite.Sprite):
+    def __init__(self,posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('Slimes/Spitter/SpitterShoot.png')
+        self.rect = self.image.get_rect()
+        
+        self.velocidade = 5 #aumentando a variavel de velocidade modificamos a frequencia de balas
+        self.rect.y = posy
+        self.rect.x = posx
+        self.direcao = -1
+
+    def movimento(self):
+        self.rect.x += self.velocidade*self.direcao
+
+    def direcao(self,pos_player, pos_mob):
+        if pos_player <= pos_mob:
+            direcao = -1
+        elif pos_player >= pos_mob:
+            direcao = 1
+
+        
+class SlimeSpitter (pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        
+        self.image = pygame.Surface([64,64], pygame.SRCALPHA)
+        self.rect = self.image.get_rect()
+
+        self.levelShift = 0
+        self.invulneravel = 0
+        self.vida = 1
+        self.vivo = True
+        self.animStart = 0
+        self.atirou = False
+        self.xIni = x
+        self.yIni = y
+        self.rect.x = x
+        self.rect.y = y
+        self.listDisparo = pygame.sprite.Group()
+
+    def morrer():
+        self.kill
+        
+    def colocar(self, superficie):
+        superficie.blit(self.image, self.rect)
+
+    def disparar(self):
+        animPos = (pygame.time.get_ticks() - self.animStart)//150
+        if(animPos >= len(SlimeSpitterShoot)):
+            self.atirou = False
+            self.animStart = pygame.time.get_ticks()
+            animPos = (pygame.time.get_ticks() - self.animStart)//150
+        if(animPos == 5):
+            minhabala = Tiro(self.rect.left-10,self.rect.centery)
+            self.listDisparo.add(minhabala)
+
+        
+
+    def morrer(self):
+        self.vida = False
+        self.animStart = pygame.time.get_ticks()
+
+    def movimento(self):
+        self.rect.x = self.xIni+self.levelShift
+        return
+
+
+        
+#--------------------------------------------------------------------------GENERAL---------------------------------------------------------------------
 class SlimeGeneral(pygame.sprite.Sprite):
     def __init__(self, x, y, xmin, xmax):
         super().__init__()
@@ -12,7 +82,9 @@ class SlimeGeneral(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.animStart = 0
-        self.vida = True
+        self.invulneravel = 0
+        self.vida = 1
+        self.vivo = True
         self.vel = 1.2
         self.direcao = 1
         self.posIni = [x,y]
