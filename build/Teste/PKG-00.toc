@@ -1,5 +1,4 @@
-('C:\\Users\\augus\\OneDrive\\Área de '
- 'Trabalho\\Testes\\build\\Teste\\PKG-00.pkg',
+('C:\\Users\\augus\\OneDrive\\Documentos\\GitHub\\K.A.Z\\build\\Teste\\PKG-00.pkg',
  {'BINARY': 1,
   'DATA': 1,
   'EXECUTABLE': 1,
@@ -8,8 +7,7 @@
   'PYSOURCE': 1,
   'PYZ': 0},
  [('PYZ-00.pyz',
-   'C:\\Users\\augus\\OneDrive\\Área de '
-   'Trabalho\\Testes\\build\\Teste\\PYZ-00.pyz',
+   'C:\\Users\\augus\\OneDrive\\Documentos\\GitHub\\K.A.Z\\build\\Teste\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
    'c:\\users\\augus\\appdata\\local\\programs\\python\\python37\\lib\\struct.pyo',
@@ -33,11 +31,10 @@
    'c:\\users\\augus\\appdata\\local\\programs\\python\\python37\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth_multiprocessing.py',
    'PYSOURCE'),
   ('Teste',
-   'C:\\Users\\augus\\OneDrive\\Área de Trabalho\\Testes\\Teste.py',
+   'C:\\Users\\augus\\OneDrive\\Documentos\\GitHub\\K.A.Z\\Teste.py',
    'PYSOURCE'),
   ('Teste.exe.manifest',
-   'C:\\Users\\augus\\OneDrive\\Área de '
-   'Trabalho\\Testes\\build\\Teste\\Teste.exe.manifest',
+   'C:\\Users\\augus\\OneDrive\\Documentos\\GitHub\\K.A.Z\\build\\Teste\\Teste.exe.manifest',
    'BINARY')],
  True,
  False,
