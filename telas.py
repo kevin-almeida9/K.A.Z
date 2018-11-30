@@ -31,6 +31,9 @@ def mouseCollide(tela):
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+5*30 < mousePos[1] < (ScreenHeight/4)+5*30+btnRectSize[1]:
             pygame.quit()
             quit()
+    elif tela == "GameOver":
+        if btnRectSize[0]/2 < mousePos[0] < int(1.5*btnRectSize[0]) and ScreenHeight-int(1.5*btnRectSize[1]) < mousePos[1] < ScreenHeight-int(0.5*btnRectSize[1]):
+            print ("Is working!")
     elif tela == "Opcoes":
         if x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+30<mousePos[1]<(ScreenHeight/4)+30+btnRectSize[1]:
             ControlsScreen()
@@ -77,14 +80,18 @@ def MenuScreen():
 def GameoverScreen():
     pygame.font.init()   
     menu = True
-    
+
+    timeTot = 15
+    timeOut = 250
+    contDelay = pygame.time.get_ticks()
+
     while menu:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
             if event.type== pygame.MOUSEBUTTONDOWN:
-                mouseCollide("Menu")
+                mouseCollide("GameOver")
 
 
         btnFont = pygame.font.Font("freesansbold.ttf", 100)
@@ -95,8 +102,16 @@ def GameoverScreen():
         
 #<g: GERANDO OS BOTÕES>------------------------------------------
         
-        button("Jogar", (ScreenWidth-btnRectSize[0])/2, (ScreenHeight/4)+1*30, btnRectSize[0], btnRectSize[1], DarkGreen, White, selectedOption)
-        button("Opçoes", (ScreenWidth-btnRectSize[0])/2, (ScreenHeight/4)+3*30, btnRectSize[0], btnRectSize[1], DarkGreen, White, selectedOption)
+        button("Menu", btnRectSize[0]/2, ScreenHeight-int(1.5*btnRectSize[1]), btnRectSize[0], btnRectSize[1], Red, Black, selectedOption)
+
+        contDelayAux = pygame.time.get_ticks()
+        contTimer = timeTot - int((contDelayAux-contDelay)/timeOut)
+        if contTimer < 0 :
+            contTimer = -1
+            button("-.-", ScreenWidth-int(1.5*btnRectSize[0]), ScreenHeight-int(1.5*btnRectSize[1]), btnRectSize[0], btnRectSize[1], DarkGreen, Black, None)
+        else:
+            button(str(contTimer), ScreenWidth-int(1.5*btnRectSize[0]), ScreenHeight-int(1.5*btnRectSize[1]), btnRectSize[0], btnRectSize[1], Green, DarkGreen, selectedOption)        
+
 
 #-------------------------------------------------------------</g
         
