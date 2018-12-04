@@ -236,7 +236,8 @@ def main():
     
     # Create all the levels
     level_list = []
-    level_list.append(fases.LevelFinal(player))
+    '''level_list.append(fases.LevelFinal(player))'''
+    level_list.append(fases.LevelP3(player))
  
     # Set the current level
     current_level_no = 0

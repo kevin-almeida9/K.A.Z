@@ -81,6 +81,7 @@ class SlimeGeneral(pygame.sprite.Sprite):
         
         self.rect = self.image.get_rect()
 
+        
         self.animStart = 0
         self.invulneravel = 0
         self.vida = 1
@@ -124,17 +125,21 @@ class SlimeGeneral(pygame.sprite.Sprite):
             self.kill()
         else:
             self.image.blit(SlimeGeneralDeath[posAnim],(0,0))
-
+            
+#--------------------------------------------------------------------------HELI SLIME---------------------------------------------------------------------
 class HeliSlime (pygame.sprite.Sprite):
     def __init__(self, x, y, pos_min, pos_max, sentido):
         super().__init__()
         self.image = pygame.Surface([64,64], pygame.SRCALPHA)
-        self.image.blit(HeliSlime[0],(0,0))
+        self.image.blit(HeliSlimeFly[0],(0,0))
         
         self.rect = self.image.get_rect()
 
+        self.sentido = sentido       
         self.animStart = 0
-        self.vida = True
+        self.invulneravel = 0
+        self.vida = 1
+        self.vivo = True
         self.vel = 1.2
         self.direcao = 1
         self.posIni = [x,y]
@@ -150,22 +155,29 @@ class HeliSlime (pygame.sprite.Sprite):
 
         
     def __direcao(self,lim_min,lim_max):
-        if self.rect.left <= lim_min:
-            self.direcao = 1
-        elif self.rect.right >= lim_max:
-            self.direcao = -1
+
+        if self.sentido == 'x':
+            if self.rect.left <= lim_min:
+                self.direcao = 1
+            elif self.rect.right >= lim_max:
+                self.direcao = -1
+        elif self.sentido == 'y':
+            if self.rect.top <= lim_min:
+                self.direcao = 1
+            elif self.rect.bottom >= lim_max:
+                self.direcao = -1
             
     def movimento(self):
-        if sentido == 'x':
+        if self.sentido == 'x':
             if self.vida:
                 animPos = ((pygame.time.get_ticks()-self.animStart)//150)
-                if(self.animStart == 0  or animPos >= len(HeliSlime)):
+                if(self.animStart == 0  or animPos >= len(HeliSlimeFly)):
                     self.animStart = pygame.time.get_ticks()
                     animPos = ((pygame.time.get_ticks()-self.animStart)//150)
 
                 
                 self.image.fill((255,255,255,0))
-                self.image.blit(HeliSlime[animPos],(0,0))
+                self.image.blit(HeliSlimeFly[animPos],(0,0))
                 if self.direcao == 1:
                     flipped = pygame.transform.flip(self.image,True,False)
                     self.image = flipped
@@ -173,23 +185,32 @@ class HeliSlime (pygame.sprite.Sprite):
                 self.posAtual[0] += (self.vel*self.direcao)
             self.__direcao(self.mMpos[0]+self.levelShift,self.mMpos[1]+self.levelShift)    
             self.rect.x = self.posAtual[0]+self.levelShift
-        elif sentido == 'y':
+
+            
+        elif self.sentido == 'y':
             if self.vida:
                 animPos = ((pygame.time.get_ticks()-self.animStart)//150)
-                if(self.animStart == 0  or animPos >= len(HeliSlime)):
+                if(self.animStart == 0  or animPos >= len(HeliSlimeFly)):
                     self.animStart = pygame.time.get_ticks()
                     animPos = ((pygame.time.get_ticks()-self.animStart)//150)
 
                 
                 self.image.fill((255,255,255,0))
-                self.image.blit(HeliSlime[animPos],(0,0))
-                if self.direcao == 1:
-                    flipped = pygame.transform.flip(self.image,True,False)
-                    self.image = flipped
+                self.image.blit(HeliSlimeFly[animPos],(0,0))
+                
                     
-                self.posAtual[0] += (self.vel*self.direcao)
+                self.posAtual[1] += (self.vel*self.direcao)
             self.__direcao(self.mMpos[0]+self.levelShift,self.mMpos[1]+self.levelShift)    
-            self.rect.y = self.posAtual[0]+self.levelShift
+            self.rect.y = self.posAtual[1]+self.levelShift
 
    
-                
+    def morrer(self):
+        """posAnim = (pygame.time.get_ticks()-self.animStart)//150
+        self.image.fill((255,255,255,0))
+            
+        if(posAnim >= len(SlimeGeneralDeath)):
+            self.kill()
+        else:
+            self.image.blit(SlimeGeneralDeath[posAnim],(0,0))"""
+        self.kill()
+               

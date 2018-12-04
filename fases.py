@@ -137,3 +137,63 @@ class LevelFinal(Level):
             self.enemy_list.add(enemy)
             
             
+class LevelP3(Level):
+    """ Definition for level 1. """
+ 
+    def __init__(self, player):
+        """ Create level 1. """
+        # Call the parent constructor
+        Level.__init__(self, player)
+ 
+        # Array with width, height, x, and y of platform
+        level = [[576,192,0,1008,pygame.image.load('Plataformas\PlataformasP3\Plataforma1.png')],
+                 [1024,448,1344,752,pygame.image.load('Plataformas\PlataformasP3\Plataforma2.png')],
+                 [768,320,1600,880,pygame.image.load('Plataformas\PlataformasP3\Plataforma3.png')],
+                 [576,192,1408,1008,pygame.image.load('Plataformas\PlataformasP3\Plataforma4.png')],
+                 [384,128,2477,1072,pygame.image.load('Plataformas\PlataformasP3\Plataforma5.png')],
+                 [512,256,2688,944,pygame.image.load('Plataformas\PlataformasP3\Plataforma6.png')],
+                 [128,128,3072,816,pygame.image.load('Plataformas\PlataformasP3\Plataforma7.png')],
+                 [320,256,2880,688,pygame.image.load('Plataformas\PlataformasP3\Plataforma8.png')],
+                 [832,826,2368,374,pygame.image.load('Plataformas\PlataformasP3\Plataforma9.png')],
+                 [3200,1216,0,-16,pygame.image.load('Plataformas\PlataformasP3\Plataforma10.png')],
+                 [256,324,2432,374,pygame.image.load('Plataformas\PlataformasP3\Escada.png')]]
+
+        # Array x , y do inimigo
+        slimeGeneralList = []
+
+        slimeSpitterList = []
+        
+        HeliSlimeList = []
+        
+        # Inicia Variaveis
+        self.spawnPointx = 150
+        self.spawnPointy = 412
+        player.rect.x = self.spawnPointx
+        player.rect.bottom = self.spawnPointy
+        self.background = pygame.image.load("Background\Background.png")
+        # Go through the array above and add platforms
+        for platform in level:
+            if(self.max < platform[0]+platform[2]-50):
+                self.max = platform[0]+platform[2]-50
+            block = Platform(platform[0], platform[1], platform[4])
+            block.rect.x = platform[2]
+            block.rect.top = platform[3]
+            block.player = self.player
+            self.platform_list.add(block)
+
+        for sg in slimeGeneralList:
+            enemy = inimigos.SlimeGeneral(sg[0],sg[1],sg[2],sg[3])
+            enemy.rect.x = sg[0]
+            enemy.rect.y = sg[1]-22
+            self.enemy_list.add(enemy)
+
+        for sp in slimeSpitterList:
+            enemy = inimigos.SlimeSpitter(sp[0],sp[1]-22)
+            self.enemy_list.add(enemy)
+
+        for sh in HeliSlimeList:
+            enemy = inimigos.HeliSlime(sh[0],sh[1],sh[2],sh[3],sh[4])
+            enemy.rect.x = sh[0]
+            enemy.rect.y = sh[1]-22
+            self.enemy_list.add(enemy)
+            
