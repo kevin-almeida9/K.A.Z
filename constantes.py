@@ -117,8 +117,7 @@ SlimeSpitterShoot = [pygame.image.load('Slimes/SpitterSlime/SpitterSlimeAttackAn
                       pygame.image.load('Slimes/SpitterSlime/SpitterSlimeAttackAnimation/SpitterAttackAnimation7.png')]
 
 #Heli Slime
-#VOANDO
-HeliSlime = [pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation0.png'),
+HeliSlimeFly = [pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation0.png'),
              pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation1.png'),
              pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation2.png'),
              pygame.image.load('Slimes/HeliSlime/HeliWalkingAnimation3.png'),
