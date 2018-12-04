@@ -102,7 +102,7 @@ class LevelFinal(Level):
 
         slimeSpitterList = [[564,371]]
         
-        HeliSlimeList = [[564,371,337,769]]
+        HeliSlimeList = [[564,371,30,375,"y"]]
         
         # Inicia Variaveis
         self.spawnPointx = 150
@@ -130,6 +130,10 @@ class LevelFinal(Level):
             enemy = inimigos.SlimeSpitter(sp[0],sp[1]-22)
             self.enemy_list.add(enemy)
 
-    
+        for sh in HeliSlimeList:
+            enemy = inimigos.HeliSlime(sh[0],sh[1],sh[2],sh[3],sh[4])
+            enemy.rect.x = sh[0]
+            enemy.rect.y = sh[1]-22
+            self.enemy_list.add(enemy)
             
             
