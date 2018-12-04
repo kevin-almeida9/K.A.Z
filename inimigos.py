@@ -156,7 +156,7 @@ class HeliSlime (pygame.sprite.Sprite):
             self.direcao = -1
             
     def movimento(self):
-        if sentido == 'x'
+        if sentido == 'x':
             if self.vida:
                 animPos = ((pygame.time.get_ticks()-self.animStart)//150)
                 if(self.animStart == 0  or animPos >= len(HeliSlime)):

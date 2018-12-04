@@ -22,6 +22,8 @@ def stamina(qual):
 #---------------------------------------------------------------TELAS-----
 GameOverBG = pygame.image.load('BackGround\GameOver.png')
 MenuBG = pygame.image.load('BackGround\MenuTemp.png')
+OpcoesBG = pygame.image.load('Background\Options.png')
+ControlesBG = pygame.image.load('Background\Controles.png')
 
 #--------------------------------------------------------------------Animações-------------------------------------------------------------------
 #K.A.Z
