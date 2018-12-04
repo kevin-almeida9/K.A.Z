@@ -1,5 +1,5 @@
 from constantes import *
-#import Teste
+import Teste
 import pygame
 
 def text_objects(text, font, color):
@@ -20,20 +20,22 @@ def button(msg, x, y, width, height, btn_color, text_color, onImage):
     if x<mousePos[0]<x+width and y<mousePos[1]<y+height and onImage != None:
         screen.blit(onImage, (x-45 ,y-4 ))
 
-def mouseCollide(tela):
+def mouseCollide(tela, isDisabled = False):
     mousePos = pygame.mouse.get_pos()
     x = (ScreenWidth-btnRectSize[0])/2#Para botoes que se encontram no meio da tela
     if tela == "Menu":
         if x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+30<mousePos[1]<(ScreenHeight/4)+30+btnRectSize[1]:
-            print("KAZ - Start")
+            Teste.main()
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+3*30 < mousePos[1] < (ScreenHeight/4)+3*30+btnRectSize[1]:
             OptionsScreen()
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+5*30 < mousePos[1] < (ScreenHeight/4)+5*30+btnRectSize[1]:
             pygame.quit()
             quit()
     elif tela == "GameOver":
-        if btnRectSize[0]/2 < mousePos[0] < int(1.5*btnRectSize[0]) and ScreenHeight-int(1.5*btnRectSize[1]) < mousePos[1] < ScreenHeight-int(0.5*btnRectSize[1]):
-            print ("Is working!")
+        if int(0.5*btnRectSize[0]) < mousePos[0] < int(1.5*btnRectSize[0]) and ScreenHeight-int(1.5*btnRectSize[1]) < mousePos[1] < ScreenHeight-int(0.5*btnRectSize[1]):
+            MenuScreen()
+        elif ScreenWidth-int(1.5*btnRectSize[0]) < mousePos[0] < ScreenWidth-int(0.5*btnRectSize[0]) and ScreenHeight-int(1.5*btnRectSize[1]) < mousePos[1] < ScreenHeight-int(0.5*btnRectSize[1]) and isDisabled == False:
+            Teste.main()
     elif tela == "Opcoes":
         if x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+30<mousePos[1]<(ScreenHeight/4)+30+btnRectSize[1]:
             ControlsScreen()
@@ -82,8 +84,9 @@ def GameoverScreen():
     menu = True
 
     timeTot = 15
-    timeOut = 250
+    timeOut = 1300     #tempo da contagem em ms
     contDelay = pygame.time.get_ticks()
+    contTimer = 10
 
     while menu:
         for event in pygame.event.get():
@@ -91,8 +94,10 @@ def GameoverScreen():
                 pygame.quit()
                 quit()
             if event.type== pygame.MOUSEBUTTONDOWN:
-                mouseCollide("GameOver")
-
+                if contTimer >= 0:
+                    mouseCollide("GameOver")
+                else:
+                    mouseCollide("GameOver", True)
 
         btnFont = pygame.font.Font("freesansbold.ttf", 100)
         textSurf, textRect = text_objects("Continuar?", btnFont, Black)
