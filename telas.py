@@ -22,7 +22,7 @@ def button(msg, x, y, width, height, btn_color, text_color, onImage):
 
 def mouseCollide(tela, isDisabled = False):
     mousePos = pygame.mouse.get_pos()
-    x = (ScreenWidth-btnRectSize[0])/2#Para botoes que se encontram no meio da tela
+    x = (ScreenWidth-btnRectSize[0])/2 #Para botoes que se encontram no meio da tela
     if tela == "Menu":
         if x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+30<mousePos[1]<(ScreenHeight/4)+30+btnRectSize[1]:
             Teste.main()
@@ -196,7 +196,7 @@ screen = pygame.display.set_mode(screenSize)
 pygame.display.set_caption("K.A.Z.")
 clock = pygame.time.Clock()
     
-#MenuScreen()
+MenuScreen()
 #OptionsScreen()
 #ControlsScreen()
-GameoverScreen()
+#GameoverScreen()
