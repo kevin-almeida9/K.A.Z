@@ -42,7 +42,7 @@ def mouseCollide(tela, isDisabled = False):
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+3*30 < mousePos[1] < (ScreenHeight/4)+3*30+btnRectSize[1]:
             print("O jogo")
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+5*30 < mousePos[1] < (ScreenHeight/4)+5*30+btnRectSize[1]:
-            print("Créditos")
+            CreditsScreen()
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+7*30 < mousePos[1] < (ScreenHeight/4)+7*30+btnRectSize[1]:
             MenuScreen()
     elif tela == "Controles":
@@ -184,6 +184,38 @@ def ControlsScreen():
 #<g: GERANDO OS BOTÕES>------------------------------------------
         
         button("Voltar", ScreenWidth-btnRectSize[0]-10, 10, btnRectSize[0], btnRectSize[1], Green, DarkGreen, None)
+
+#-------------------------------------------------------------</g
+        
+        pygame.display.update()
+        clock.tick(15)
+
+def CreditsScreen():
+    pygame.font.init()    
+    menu = True
+
+    yIni = ScreenWidth - 200
+    creditsSpeed = 7
+    
+    while menu:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type== pygame.MOUSEBUTTONDOWN:
+                mouseCollide("Creditos")
+
+        screen.blit(CreditosBG,(0,0))
+        if yIni > -1000:
+            yIni = yIni - creditsSpeed
+            screen.blit(CreditosLetras,(0,yIni))
+        else:
+            pygame.time.delay(2000)
+            OptionsScreen()
+        
+#<g: GERANDO OS BOTÕES>------------------------------------------
+        
+        #button("Voltar", ScreenWidth-btnRectSize[0]-10, 10, btnRectSize[0], btnRectSize[1], Green, DarkGreen, None)
 
 #-------------------------------------------------------------</g
         
