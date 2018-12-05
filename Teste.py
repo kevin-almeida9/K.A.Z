@@ -25,7 +25,6 @@ class Player(pygame.sprite.Sprite):
         self.invulneravel = 0
         
         self.vida = 3
-        self.tryOuts = 3 
         
         # Call the parent's constructor
         super().__init__()
@@ -295,8 +294,6 @@ def main():
                 if(animPosition >= len(KAZDeath)):
                     player.kill()
                     a = False
-                    #if player.tryOuts > 0:
-                    #   player.tryOuts -= 1
                 else:
                     player.death(animPosition)
                     current_level.draw(screen)
@@ -352,14 +349,8 @@ def main():
         current_level.draw(screen)
         active_sprite_list.draw(screen)
 
-        ## carrega a fonte, note que "minhafonte.ttf" é o nome do arquivo da fonte
-        ## e deve estar no mesmo diretório do script
-        fonte = pygame.font.Font("freesansbold.ttf", 50)
-        ## transforma o texto em imagem
-        ## str(variável) serve para transformar qualquer variável em string
-        ## o true é para aplicar suavização de serrilhado (anti-alias)
-        ## o último parâmetro é a cor do texto em RGB
-        tentativas = fonte.render('x' + str(player.tryOuts), True, (255,255,255))
+        vidas = pygame.font.Font("freesansbold.ttf", 30)
+        tentativas = vidas.render('x' + str(player.tryOuts), True, (255,255,255))
         
         player.level.enemyMove()
         screen.blit(KAZIcon, (5,5))

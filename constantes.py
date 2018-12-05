@@ -24,6 +24,7 @@ GameOverBG = pygame.image.load('BackGround\GameOver.png')
 MenuBG = pygame.image.load('BackGround\MenuTemp.png')
 OpcoesBG = pygame.image.load('Background\Options.png')
 ControlesBG = pygame.image.load('Background\Controles.png')
+CreditosBG = pygame.image.load('Background\Créditos.png')
 
 #--------------------------------------------------------------------Animações-------------------------------------------------------------------
 #K.A.Z
@@ -131,5 +132,7 @@ KAZLifeIcon = pygame.image.load('KAZ\KAZIcons\LifeIconIcon.png')
 KAZIcon = pygame.image.load('KAZ\KAZIcons\KAZIcon.png')
 SpitterShoot = pygame.image.load('Slimes\SpitterSlime\SpitterShoot.png')
 selectedOption = pygame.image.load('Background\SelectedOption.png')
+CreditosLetras = pygame.image.load('Background\CréditosLetreiros.png')
+
 
 #-------------------------------------------------------------------cenario--------------------------------------------------------------------
