@@ -31,6 +31,8 @@ class Level(object):
         self.spawnPointy = 0
         self.player = player
         self.shift = 0;
+        self.shiftY = 0;
+        self.maxY = 0;
         self.max = 0;
          
         # Background image
@@ -41,6 +43,8 @@ class Level(object):
         """ Update everything in this level."""
         self.platform_list.update()
         self.enemy_list.update()
+        if(self.shiftY > self.maxY):
+            self.shiftY = 0
         for enemy in self.enemy_list:
             if enemy.invulneravel > 0:
                 b = pygame.time.get_ticks() - enemy.invulneravel
@@ -48,12 +52,13 @@ class Level(object):
                     enemy.invulneravel = 0
             if not enemy.vivo:
                 enemy.levelShift = self.shift
+                enemy.levelShiftY = self.shiftY
                 enemy.morrer()
- 
+              
     def draw(self, screen):
         """ Draw everything on this level. """
         # Draw the background
-        screen.blit(self.background,(self.shift,0))
+        screen.blit(self.background,(self.shift,self.shiftY))
  
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
@@ -63,6 +68,7 @@ class Level(object):
     def enemyMove(self):
          for s in self.enemy_list:
             s.levelShift = self.shift
+            s.levelShiftY = self.shiftY
             s.movimento()
 
 class LevelFinal(Level):
@@ -107,6 +113,8 @@ class LevelFinal(Level):
         # Inicia Variaveis
         self.spawnPointx = 150
         self.spawnPointy = 412
+        self.maxY = 0
+        player.levelShiftY = 0
         player.rect.x = self.spawnPointx
         player.rect.bottom = self.spawnPointy
         self.background = pygame.image.load("Background\Background.png")
@@ -164,6 +172,10 @@ class LevelP3(Level):
         slimeSpitterList = []
         
         HeliSlimeList = []
+
+        player.levelShiftY = 1008
+        self.maxY = 1008
+        self.shiftY = 1008
         
         # Inicia Variaveis
         self.spawnPointx = 150

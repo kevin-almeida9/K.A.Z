@@ -25,6 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.invulneravel = 0
         
         self.vida = 3
+        self.tryOuts = 3
         
         # Call the parent's constructor
         super().__init__()
@@ -53,13 +54,26 @@ class Player(pygame.sprite.Sprite):
         else:
             if self.change_y < 10:
                 self.change_y += .35
- 
+
+        if(self.rect.y <= 50 + self.rect.height-10 and self.change_y < 0):
+            if(self.level.shiftY < self.level.maxY):
+                self.level.shiftY -= self.change_y
+                for platform in self.level.platform_list:
+                    platform.rect.y-=self.change_y
         # See if we are on the ground.
-        if self.rect.y >= ScreenHeight - self.rect.height-10 and self.change_y >= 0:
-            self.vida = 0
-            self.rect.bottom = ScreenHeight
-            self.change_y = 0
+        if self.rect.y >= ScreenHeight-100 - self.rect.height-10 and self.change_y >= 2:
             
+            if(self.level.shiftY >= 10):
+                self.change_y = 2
+                self.rect.bottom = ScreenHeight-100
+                self.level.shiftY-=self.change_y
+                for platform in self.level.platform_list:
+                    platform.rect.y-=self.change_y
+            elif self.rect.y >= ScreenHeight - self.rect.height-10:
+                self.vida = 0
+                self.rect.bottom = ScreenHeight
+                self.change_y = 0
+                
     def update(self):
         """ Move the player. """
         # Gravity
@@ -238,7 +252,7 @@ def main():
     
     # Create all the levels
     level_list = []
-    '''level_list.append(fases.LevelFinal(player))'''
+    level_list.append(fases.LevelFinal(player))
     level_list.append(fases.LevelP3(player))
  
     # Set the current level

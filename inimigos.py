@@ -32,6 +32,7 @@ class SlimeSpitter (pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.levelShift = 0
+        self.levelShiftY = 0
         self.invulneravel = 0
         self.vida = 1
         self.vivo = True
@@ -67,6 +68,7 @@ class SlimeSpitter (pygame.sprite.Sprite):
 
     def movimento(self):
         self.rect.x = self.xIni+self.levelShift
+        self.rect.y = self.yIni+self.levelShiftY
         return
 
 
@@ -92,6 +94,7 @@ class SlimeGeneral(pygame.sprite.Sprite):
         self.posAtual = [x,y]
         self.mMx = [xmin,xmax]
         self.levelShift = 0
+        self.levelShiftY = 0
 
     def __direcao(self,lim_min,lim_max):
         if self.rect.left <= lim_min:
@@ -116,6 +119,7 @@ class SlimeGeneral(pygame.sprite.Sprite):
             self.posAtual[0] += (self.vel*self.direcao)
         self.__direcao(self.mMx[0]+self.levelShift,self.mMx[1]+self.levelShift)    
         self.rect.x = self.posAtual[0]+self.levelShift
+        self.rect.y = self.posAtual[1]+self.levelShiftY
 
     def morrer(self):
         posAnim = (pygame.time.get_ticks()-self.animStart)//150
@@ -146,6 +150,7 @@ class HeliSlime (pygame.sprite.Sprite):
         self.posAtual = [x,y]
         self.mMpos = [pos_min,pos_max]
         self.levelShift = 0
+        self.levelShiftY = 0
 
         def __direcao(self,lim_min,lim_max):
             if self.rect.left <= lim_min:
