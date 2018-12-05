@@ -129,7 +129,7 @@ class HeliSlime (pygame.sprite.Sprite):
     def __init__(self, x, y, pos_min, pos_max, sentido):
         super().__init__()
         self.image = pygame.Surface([64,64], pygame.SRCALPHA)
-        self.image.blit(HeliSlime[0],(0,0))
+        self.image.blit(HeliSlimeFly[0],(0,0))
         
         self.rect = self.image.get_rect()
 

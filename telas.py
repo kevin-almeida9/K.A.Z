@@ -194,8 +194,8 @@ def CreditsScreen():
     pygame.font.init()    
     menu = True
 
-    yIni = ScreenWidth
-    creditsSpeed = 5
+    yIni = ScreenWidth - 200
+    creditsSpeed = 7
     
     while menu:
         for event in pygame.event.get():
