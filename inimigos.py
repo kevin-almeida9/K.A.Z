@@ -109,7 +109,7 @@ class SlimeGeneral(pygame.sprite.Sprite):
             
             self.image.fill((255,255,255,0))
             self.image.blit(SlimeGeneralWalk[animPos],(0,0))
-            if self.direcao == 1:
+            if self.direcao == -1:
                 flipped = pygame.transform.flip(self.image,True,False)
                 self.image = flipped
                 

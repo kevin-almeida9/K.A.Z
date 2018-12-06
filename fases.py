@@ -102,7 +102,8 @@ class LevelFinal(Level):
 
         slimeSpitterList = [[564,371]]
         
-        HeliSlimeList = [[564,371,30,375,"y"]]
+        HeliSlimeList = [[564,371,30,375,"y"],
+                         [350,40,30,375,"y"]]
         
         # Inicia Variaveis
         self.spawnPointx = 150
