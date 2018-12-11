@@ -32,6 +32,7 @@ class Level(object):
         self.player = player
         self.shift = 0;
         self.shiftY = 0;
+        self.shiftYini = 0;
         self.maxY = 0;
         self.max = 0;
          
@@ -114,7 +115,7 @@ class LevelFinal(Level):
         self.spawnPointx = 150
         self.spawnPointy = 412
         self.maxY = 0
-        player.levelShiftY = 0
+        self.shiftYini = 0
         player.rect.x = self.spawnPointx
         player.rect.bottom = self.spawnPointy
         self.background = pygame.image.load("Background\Background.png")
@@ -173,9 +174,9 @@ class LevelP3(Level):
         
         HeliSlimeList = []
 
-        player.levelShiftY = 1008
-        self.maxY = 1008
-        self.shiftY = 1008
+        self.shiftYini = 460
+        self.maxY = 460
+        self.shiftY = 460
         
         # Inicia Variaveis
         self.spawnPointx = 150

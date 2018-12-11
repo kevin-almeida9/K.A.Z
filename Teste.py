@@ -57,6 +57,7 @@ class Player(pygame.sprite.Sprite):
 
         if(self.rect.y <= 50 + self.rect.height-10 and self.change_y < 0):
             if(self.level.shiftY < self.level.maxY):
+                self.levelShiftY -= self.change_y
                 self.level.shiftY -= self.change_y
                 for platform in self.level.platform_list:
                     platform.rect.y-=self.change_y
@@ -64,8 +65,9 @@ class Player(pygame.sprite.Sprite):
         if self.rect.y >= ScreenHeight-100 - self.rect.height-10 and self.change_y >= 2:
             
             if(self.level.shiftY >= 10):
-                self.change_y = 2
+                #self.change_y = 4
                 self.rect.bottom = ScreenHeight-100
+                self.levelShiftY -= self.change_y
                 self.level.shiftY-=self.change_y
                 for platform in self.level.platform_list:
                     platform.rect.y-=self.change_y
@@ -237,7 +239,7 @@ def update(spriteList):
     spriteList.update()
 
 
-def main():
+def main(kkkkk):
     """ Main Program """
     pygame.init()
     
@@ -256,8 +258,9 @@ def main():
     level_list.append(fases.LevelP3(player))
  
     # Set the current level
-    current_level_no = 0
+    current_level_no = kkkkk
     current_level = level_list[current_level_no]
+    player.levelShiftY = current_level.shiftYini
     
     active_sprite_list = pygame.sprite.Group()
     player.level = current_level
@@ -382,10 +385,10 @@ def main():
         pygame.display.flip()
 
         if(player.rect.x+player.levelShift >= player.level.max-100):
-            player.vida = 0
+            main(kkkkk+1)
     # Be IDLE friendly. If you forget this line, the program will 'hang'
     # on exit.
     pygame.quit()
  
 if __name__ == "__main__":
-    main()
+    main(0)

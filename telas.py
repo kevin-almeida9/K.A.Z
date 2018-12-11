@@ -25,7 +25,7 @@ def mouseCollide(tela, isDisabled = False):
     x = (ScreenWidth-btnRectSize[0])/2 #Para botoes que se encontram no meio da tela
     if tela == "Menu":
         if x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+30<mousePos[1]<(ScreenHeight/4)+30+btnRectSize[1]:
-            Teste.main()
+            Teste.main(0)
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+3*30 < mousePos[1] < (ScreenHeight/4)+3*30+btnRectSize[1]:
             OptionsScreen()
         elif x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+5*30 < mousePos[1] < (ScreenHeight/4)+5*30+btnRectSize[1]:
@@ -35,7 +35,7 @@ def mouseCollide(tela, isDisabled = False):
         if int(0.5*btnRectSize[0]) < mousePos[0] < int(1.5*btnRectSize[0]) and ScreenHeight-int(1.5*btnRectSize[1]) < mousePos[1] < ScreenHeight-int(0.5*btnRectSize[1]):
             MenuScreen()
         elif ScreenWidth-int(1.5*btnRectSize[0]) < mousePos[0] < ScreenWidth-int(0.5*btnRectSize[0]) and ScreenHeight-int(1.5*btnRectSize[1]) < mousePos[1] < ScreenHeight-int(0.5*btnRectSize[1]) and isDisabled == False:
-            Teste.main()
+            Teste.main(0)
     elif tela == "Opcoes":
         if x < mousePos[0] < x+btnRectSize[0] and (ScreenHeight/4)+30<mousePos[1]<(ScreenHeight/4)+30+btnRectSize[1]:
             ControlsScreen()
